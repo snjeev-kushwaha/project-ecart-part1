@@ -57,7 +57,7 @@ function Shopadd() {
   
   return (
     <div className='shopadd'>
-      <h1>Shop Registraion from</h1>
+      <h2>Shop Registraion from</h2>
       <Form>
       <Row>
         <Col><Form.Label>Registration Number</Form.Label>
@@ -132,7 +132,7 @@ function Shopadd() {
       <Form.Label>Status</Form.Label>
       <select class="form-select" value={status} onChange={(e) => setStatus(e.target.value)}>
         <option></option>
-          <option>activated</option>
+          <option>Activated</option>
           <option>pendding</option>
         </select>
       <Button variant="primary" type="submit" onClick={addShop}>

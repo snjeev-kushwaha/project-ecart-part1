@@ -37,7 +37,7 @@ function OfferAdd() {
   }
 
   return (
-    <div className='container'>
+    <div className='addoffer'>
       <h1>Offer form</h1>
       <Form>
         <Form.Label>Offer_Id</Form.Label>

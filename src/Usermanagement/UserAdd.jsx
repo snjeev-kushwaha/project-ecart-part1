@@ -1,8 +1,10 @@
 import {Form, Button, Row, Col} from 'react-bootstrap';
+import './user.css';
 function UserManagement(){
     return(
         <>
-        <div>
+        <div className='user'>
+          <h1>User Management From</h1>
         <Form>
         <Form.Label>User_Id</Form.Label>
         <Form.Control type="text" />

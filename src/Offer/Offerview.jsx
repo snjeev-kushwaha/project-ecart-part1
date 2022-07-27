@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Table from "react-bootstrap/Table";
 import { Modal, Form, Button } from "react-bootstrap";
 import { Row, Col } from "react-bootstrap";
-
+import DataTable from 'react-data-table-component';
+import {Link} from 'react-router-dom';
 function Offerview() {
   let [data, setData] = useState([]);
   let [offer_id, setOffer_id] = useState("");
@@ -16,7 +16,7 @@ function Offerview() {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
-  // const handleShow = () => setShow(true);
+  const handleShow = () => setShow(true);
     
   function submitData(offer_id,
     coupan_code,
@@ -34,20 +34,21 @@ function Offerview() {
       setFlat_discount(flat_discount);
       setValid_in(valid_in);
       setAdditional_offers(additional_offers);
-      setShow(true);
+      handleShow();
     
     }
 
   // get api
 
   useEffect(() => {
-    async function displayOffer() {
-      let response = await fetch("http://localhost:5050/offer/offer");
-      let Udata = await response.json();
-      setData(Udata.response);
-    }
     displayOffer();
   }, []);
+
+  async function displayOffer() {
+    let response = await fetch("http://localhost:5050/offer/offer");
+    let Udata = await response.json();
+    setData(Udata.response);
+  }
 
   // delete api
 
@@ -59,6 +60,7 @@ function Offerview() {
         alert("userdeleted");
       }
     });
+    displayOffer();
   }
 
   // put api
@@ -80,65 +82,72 @@ function Offerview() {
         console.warn(res)
       })
     })
+    displayOffer();
   }
 
-  return (
-    <div>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Offer_id</th>
-            <th>Coupan_code</th>
-            <th>From_date</th>
-            <th>To_date</th>
-            <th>Discount_persentage</th>
-            <th>Flat_discount</th>
-            <th>Valid_in</th>
-            <th>Bank Offers</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data && data.map((item, index) => {
-            return (
-              <>
-                <tr key={index}>
-                  <td>{item.offer_id}</td>
-                  <td>{item.coupan_code}</td>
-                  <td>{item.From_date}</td>
-                  <td>{item.to_date}</td>
-                  <td>{item.discountPersentage}</td>
-                  <td>{item.flat_discount}</td>
-                  <td>{item.valid_in}</td>
-                  <td>{item.additional_offers}</td>
-                  <td>
-                    <Button
-                      variant="success"
-                      onClick={() =>{
-                       submitData(
-                          item.offer_id,
-                          item.coupan_code,
-                          item.From_date,
-                          item.to_date,
-                          item.discountPersentage,
-                          item.flat_discount,
-                          item.valid_in,
-                          item.additional_offers
-                        )
-                      }}
-                    >
-                      Update
-                    </Button>
-                  </td>
-                  <td>
-                    <Button
-                      onClick={() => deleteOffer(item.offer_id)}
-                      variant="danger"
-                    >
-                      Delete
-                    </Button>
-                  </td>
+  const columns =[
+    {
+      name : "Offer_id",
+      selector: row=> row.offer_id,
+    },
+    {
+      name : "Coupan_code",
+      selector: row=> row.coupan_code,
+    },
+    {
+      name : "From_date",
+      selector: row => row.From_date,
+    },
+    {
+      name : "To_date",
+      selector: row=> row.to_date,
+    },{
+      name : "DiscountPersentage",
+      selector: row=> row.discountPersentage,
+    },
+    {
+      name : "Flat_discount",
+      selector: row => row.flat_discount,
+    },
+    {
+      name : "Valid_in",
+      selector: row => row.valid_in,
+    },
+    {
+      name : "Additional_offers",
+      selector: row => row.additional_offers,
+    },
+    {
+      name: "Edit",
+      cell: row=><Button variant="success" onClick={() =>{submitData(row.offer_id,row.coupan_code,row.From_date,row.to_date,row.discountPersentage,row.flat_discount,row.valid_in,row.additional_offers)}} > Update</Button>,
+    },
+    {
+      name: "Delete",
+      cell: row =>{return (<Button onClick={() => deleteOffer(row.offer_id)} variant="danger">Delete</Button>)}
+    }
 
-                  <Modal show={show} onHide={handleClose}>
+  ]
+
+  return (
+    <>
+    <div className="container">
+    <Row style={{marginTop:"20px"}}>
+        <Col xs={12} md={10}>
+          Offer List
+        </Col>
+        <Col xs={6} md={2}>
+        <Button variant="success"><Link to="/offeradd">Add Offer</Link></Button>
+        </Col>
+      </Row>
+    <DataTable
+    columns={columns}
+    data={data}
+    pagination
+    fixedHeader
+    highlightOnHover
+    />
+    </div>
+       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
@@ -192,7 +201,7 @@ function Offerview() {
             </Col>
           </Row>
           <Form.Label>Valid_In</Form.Label>
-          <select class="form-select">
+          <select class="form-select" value={valid_in} onChange={(e) =>setValid_in(e.target.value)}>
             <option></option>
             <option>All India</option>
             <option>Indore</option>
@@ -215,14 +224,7 @@ function Offerview() {
           </Button>
         </Modal.Footer>
       </Modal>
-                </tr>
-              </>
-            );
-          })}
-        </tbody>
-      </Table>
-      
-    </div>
+    </>
   );
 }
 

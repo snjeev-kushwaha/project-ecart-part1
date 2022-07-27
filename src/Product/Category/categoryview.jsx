@@ -1,31 +1,33 @@
 import React, { useEffect, useState } from "react";
-import { Table, Button } from "react-bootstrap";
-import { Modal, Form } from "react-bootstrap";
-
+import './category.css';
+import { Modal, Form, Button, Row, Col} from "react-bootstrap";
+import DataTable from 'react-data-table-component';
+// import Link from 'react-router-dom';
 function Categoryview() {
 
   let[data1, setData1] = useState([]);
   let [category_id, setCatgory_id] =useState('');
-  let[category_name, setCategory_name] = useState("");
+  let[category_name, setCategory_name] = useState('');
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
-  // const handleShow = (category_id, category_name) => 
+  const handleShow = () => setShow(true);
 
   function submitData (category_id, category_name) {
-    setShow(true);
     setCatgory_id(category_id);
     setCategory_name(category_name);
+    handleShow();
   }
 
   //  get api
 useEffect(() =>{
-  async function displayCategory(){
-    let response = await fetch("http://localhost:5050/product_category/product_category")
-    let Udata = await response.json()
-    setData1(Udata.response);
-}displayCategory();
+  displayCategory();
 }, [])
+async function displayCategory(){
+  let response = await fetch("http://localhost:5050/product_category/product_category")
+  let Udata = await response.json()
+  setData1(Udata.response);
+}
   
 // delete api
 function deleteOffer(category_id){
@@ -35,11 +37,14 @@ function deleteOffer(category_id){
     .then((res)=>{
       if(res.status === 200){
         alert("userdeleted")
+        
       }
     })
+    displayCategory();
   }
 
   //put api
+
   function updateCategory() {
     let data1 ={category_id, category_name}
 
@@ -57,30 +62,60 @@ function deleteOffer(category_id){
         console.warn(res)
       })
     })
+    displayCategory();
   }
+  
+  const columns =[
+    {
+      name: 'Category_id',
+      selector:row => row.category_id,
+    },
+    {
+      name:'Category_name',
+      selector: row=> row.category_name,
+    },
+    {
+      name: "Edit",
+      cell: row =><Button variant="success" onClick={() => submitData(row.category_id,row.category_name)}>Update</Button>
+    },
+    {
+      name:"Delete",
+      cell:(row) =>{
+        return (<Button onClick={() => deleteOffer(row.category_id)} variant="danger">Delete</Button>)
+      }
+    }
+  ]
   
   return (
     <>
-    <div>
-       <Table striped bordered hover>
-      <thead>
-        <tr>
-          <th>Category_id</th>
-          <th>Category_name</th>
-          <th>Edit</th>
-          <th>Delete</th>
-        </tr>
-      </thead>
-      <tbody>
-        {data1.map((item, index) =>{
-          return(
-            <>
-            <tr key={index}>
-            <td>{item.category_id}</td>
-            <td>{item.category_name}</td>
-            <td><Button variant="success" onClick={() => submitData(item.category_id,item.category_name)}>Update</Button></td>
-             <td><Button onClick={() => deleteOffer(item.category_id)} variant="danger">Delete</Button></td>
-             <Modal show={show} onHide={handleClose}>
+   {/* <div>
+   <Row>
+        <Col xs={12} md={9} style={{fontSize:"bold"}}>
+         Categories
+        </Col>
+        <Col xs={6} md={3}>
+        <a href="/dashboard">Dashboard</a> / categories
+        </Col>
+      </Row>
+   </div> */}
+    <div className="container">
+    <Row style={{marginTop:"20px"}}>
+        <Col xs={12} md={10}>
+          Category List
+        </Col>
+        <Col xs={6} md={2}>
+        <Button variant="success"><a href="/categoryadd">Add category</a></Button>
+        </Col>
+      </Row>
+      <DataTable
+      columns= {columns}
+      data = {data1}
+      pagination
+      fixedHeader
+      highlightOnHover
+      />
+    </div>
+    <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Update category</Modal.Title>
         </Modal.Header>
@@ -100,16 +135,9 @@ function deleteOffer(category_id){
           </Button>
         </Modal.Footer>
       </Modal>
-          </tr>
-          </>
-          )
-        })}
-      </tbody>
-    </Table>
-    </div>
-    
     </>
   )
 }
 
 export default Categoryview
+

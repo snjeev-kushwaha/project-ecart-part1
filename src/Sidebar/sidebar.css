@@ -2,17 +2,17 @@
     /* display: flex; */
     text-decoration: none;
     list-style: none;
-    height: 350%;
-    width: 300px;
-    background-color: rgb(29, 28, 44);
-    color: wheat;
+
+    width: 250px;
+    background-color: #2a2828;
+    color: rgb(250, 250, 250);
     padding-bottom: 213px;
     padding-left: 15px;
     padding-top: 20px;
-    
 }
 ul li {
     list-style: none;
+    text-decoration: none;
 }
 .side{
     display: flex;
@@ -22,7 +22,11 @@ ul li {
 .routes{
     height: 100vh;
     width: 100%;
-    background-color: aliceblue;
+    /* background-color: aliceblue; */
     border: 30px;
-    border-color: blue;
+    /* border-color: blue; */
+}
+li a{
+    text-decoration: none;
+    color: rgb(139, 142, 144);
 }

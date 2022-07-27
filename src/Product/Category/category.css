@@ -7,3 +7,10 @@
 h1 {
     margin-left: 300px;
 }
+.addcategory button{
+    margin-left: 230px;
+    margin-top: 10px;
+    width: 20%;
+    height: 8vh;
+    font-weight: bold;
+}

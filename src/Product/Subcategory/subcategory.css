@@ -4,3 +4,10 @@
         color: rgb(15, 14, 14);
         font-weight: bold;       
 }
+.subcategory button{
+        margin-left: 250px;
+    margin-top: 10px;
+    width: 20%;
+    height: 8vh;
+    font-weight: bold;
+}
