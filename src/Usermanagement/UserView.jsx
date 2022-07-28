@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component';
-import {Button, Modal} from 'react-bootstrap';
+import {Button, Modal, Row, Col} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
 function UserView() {
- let [ data1, setData1] = useState([]);
- let [user_Id, setUser_Id] = useState();
- let [fullname,setFullname] = useState();
- let [dateofjoin, setDateofjoin] = useState();
- let [password, setPassword] = useState();
- let [dept, setDept] = useState();
- let [role, setRole] = useState();
+
+ let [ data, setData] = useState([]);
+ let [ search, setSearch] = useState('');
+ let [ filtereduser, setFilteredUser] = useState([]);
+
+//  let [user_Id, setUser_Id] = useState();
+//  let [fullname,setFullname] = useState();
+//  let [dateofjoin, setDateofjoin] = useState();
+//  let [password, setPassword] = useState();
+//  let [dept, setDept] = useState();
+//  let [role, setRole] = useState();
  let [status, setStatus] = useState('');
  
  const [show, setShow] = useState(false);
@@ -16,38 +21,37 @@ function UserView() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-function setData(status){
+function selectData(status){
    handleShow();
    setStatus(status)
 }
-
- useEffect(() =>{
-    fetchData();
- },[])
 
  // GET api
 
  async function fetchData(){
     let response = await fetch('http://localhost:5050/user/user', {method :"GET"});
     let Udata = await response.json();
-    setData1(Udata.response);
+    setData(Udata.response);
+    setFilteredUser(Udata.response);
  }
 
  // Delete api
- function deleteUser(user_id){
-    fetch(`http://localhost:5050/user/user/${user_id}`, {
-    method: "DELETE"
-})
-.then((res) =>{
-    if(res.status === 200)
-    alert("user deleted")
-})
-}
+ 
+//  function deleteUser(user_id){
+//     fetch(`http://localhost:5050/user/user/${user_id}`, {
+//     method: "DELETE"
+// })
+// .then((res) =>{
+//     if(res.status === 200)
+//     alert("user deleted")
+// })
+// fetchData();
+// }
 
  // put api
 
  function updateUser(user_id){
-    let data = (user_Id,fullname,dateofjoin,password,dept,role,status)
+    let data = (status)
     let reqData ={
         method:"PUT",
        headers: {"Content-Type":"application/json"},
@@ -59,16 +63,19 @@ function setData(status){
         console.warn("user updated")
        })
     })
+    fetchData();
  }
 
  const columns =[
     {
         name: "User_Id",
-        selector: row=> row.user_Id
+        selector: row=> row.user_Id,
+        sortable: true
     },
     {
         name: "Fullname",
-        selector: row=> row.fullname
+        selector: row=> row.fullname,
+        sortable: true
     },
     {
         name: "Dateofjoin",
@@ -92,22 +99,51 @@ function setData(status){
     },
     {
         name: "Action",
-        cell: row=>{return (<Button varient="primary" onClick={() => setData(row.user_Id)}>Edit</Button>)}
+        cell: row=>{return (<Button varient="primary" onClick={() => selectData(row.user_Id)}><i class="bi bi-pencil"></i></Button>)}
     }
  ]
+
+ useEffect(() =>{
+  fetchData();
+},[])
+
+useEffect(() => {
+  let result = data.filter(value => {
+    return value.fullname.toLowerCase().match(search.toLowerCase());
+  })
+  setFilteredUser(result);
+}, [search]);
 
   return (
     <>
     <div className='container'>
+    <Row style={{marginTop:"20px"}}>
+        <Col xs={12} md={10}>
+          Users
+        </Col>
+        <Col xs={6} md={2}>
+        <Button variant="success"><Link to="/categoryadd" style={{color:"white",textDecoration:"none"}}><i class="bi bi-plus"></i>Add User</Link></Button>
+        </Col>
+      </Row>
    <DataTable 
-   title = "User"
    columns={columns}
-   data = {data1}
+   data = {filtereduser}
    pagination
    fixedHeader
+   fixedHeaderScrollHeight="450px"
+   selectableRows
+   selectableRowsHighlight
    highlightOnHover
+   subHeader
+   subHeaderComponent={<input type="search" 
+   placeholder="search here" 
+   className="w-25 form-control"
+   value={search}
+   onChange = {(e) => setSearch(e.target.value)}
    />
-    </div>
+  }
+   />
+  
  <Modal show={show} onHide={handleClose}>
  <Modal.Header closeButton>
    <Modal.Title>User status</Modal.Title>
@@ -130,6 +166,7 @@ function setData(status){
    </Button>
  </Modal.Footer>
 </Modal>
+</div>
 </>
   )
 }

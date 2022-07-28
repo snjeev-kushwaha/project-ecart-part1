@@ -1,10 +1,11 @@
-import React from 'react'
-import { useState } from 'react';
+import React from 'react';
+import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import './subcategory.css';
 function Subcategoryadd() {
   
+let [ data, setData] = useState([]);
 let [category_id, setCategory] = useState('');
 let[sub_category_id, setSub_category_id] = useState('');
 let[sub_category_name, setSub_category_name] = useState('');
@@ -26,12 +27,33 @@ function addSubcategory(){
   fetch("http://localhost:5050/product_subcategory/product_subcategory", reqData)
   .then(response => console.log(`data submitted${response.status}`))
 }
+
+ // get api category id
+  
+ async function displayCategory(){
+  let res = await fetch("http://localhost:5050/product_category/product_category");
+  let Udata = await res.json();
+  setData(Udata.response);
+}
+useEffect(() =>{
+  displayCategory();
+}, [])
+
   return (
     <div className='subcategory'>
       <h1>Subcategory Form</h1>
       <Form>
-      <Form.Label>Category_id</Form.Label>
-      <Form.Control type="text" value={category_id} onChange={(e) => setCategory(e.target.value)} />
+      <Form.Label>CategoryName</Form.Label>
+      <select className="form-select" type="text" placeholder='categoryname' value={category_id} onChange={(e) => setCategory(e.target.value)}>
+      <option value="">--select category--</option>
+      {
+        data.map((item,index) =>{
+          return (
+            <option key={index} vlaue={item.category_id}>{item.category_name}</option>
+          )
+        })
+      }
+      </select>
       
       <Form.Label>SubCategory_id</Form.Label>
       <Form.Control type="text" value={sub_category_id} onChange={(e) => setSub_category_id(e.target.value)} />

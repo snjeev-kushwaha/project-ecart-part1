@@ -3,11 +3,15 @@ import './shop.css';
 import {Modal, Form, Button} from 'react-bootstrap';
 import {Row, Col} from 'react-bootstrap';
 import DataTable from 'react-data-table-component';
+import Swal from 'sweetalert2';
 import {Link} from 'react-router-dom';
 
 function Shopview() {
 
-  let [data1, setData1] = useState([]);
+  let [data, setData] = useState([]);
+  let [search, setSearch] = useState('');
+  let [filteredshop, setFilteredShop] = useState([]);
+
   let [Reg_no, setReg_no] = useState('');
   let[shop_id, setShop_id] = useState('');
   let[shop_name, setShop_name] = useState('');
@@ -52,15 +56,12 @@ function submitData(Reg_no,shop_id,shop_name,address,state,city,pincode,contact,
     }
 
   // get api
-
-  useEffect(() =>{
-    displayShop();
-  }, [])
   
   async function displayShop(){
     let response = await fetch(`http://localhost:5050/shop_registration/shop_registration`, {method: "GET"})
     let Udata = await response.json()
-    setData1(Udata.response);
+    setData(Udata.response);
+    setFilteredShop(Udata.response)
 }
 
  // delete api
@@ -71,7 +72,13 @@ function submitData(Reg_no,shop_id,shop_name,address,state,city,pincode,contact,
       })
       .then((res)=>{
         if(res.status === 200){
-          alert("userdeleted")
+          // alert("userdeleted")
+          Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            confirmButtonText: 'Yes, delete it!'
+          })
         }
       })
       displayShop();
@@ -93,7 +100,15 @@ function submitData(Reg_no,shop_id,shop_name,address,state,city,pincode,contact,
     fetch(`http://localhost:5050/shop_registration/shop_registration/${Reg_no}`, reqData)
     .then((result)=>{
       result.json().then((res)=>{
-        console.warn(res)
+        // console.warn(res);
+        Swal.fire({
+          title: 'Sweet!',
+          text: 'Shop is updated',
+          imageUrl: 'https://unsplash.it/400/200',
+          imageWidth: 400,
+          imageHeight: 200,
+          imageAlt: 'Custom image',
+        })
       })
     })
     displayShop();
@@ -103,16 +118,17 @@ function submitData(Reg_no,shop_id,shop_name,address,state,city,pincode,contact,
     {
       name: "Reg.no",
       selector: row=> row.Reg_no,
-      fixed: "left"
+      sortable: true,
     },
     {
       name: "Shop_id",
       selector: row=> row.shop_id,
-      fixed: "left"
+      sortable: true,
     },
     {
       name: "Shop_name",
-      selector: row=> row.shop_name
+      selector: row=> row.shop_name,
+      sortable: true,
     },
     {
       name: "Address",
@@ -172,15 +188,27 @@ function submitData(Reg_no,shop_id,shop_name,address,state,city,pincode,contact,
    },
    {
     name: "Edit",
-    cell: row=><Button variant="success" onClick={() => submitData(row.Reg_no,row.shop_id,row.shop_name,row.address,row.state,row.city,row.pincode,row.contact,row.owner,row.type,row.email,row.url,row.gst,row.ternover,row.description,row.term_condition,row.status)}>Edit</Button>
+    cell: row=><Button variant="success" onClick={() => submitData(row.Reg_no,row.shop_id,row.shop_name,row.address,row.state,row.city,row.pincode,row.contact,row.owner,row.type,row.email,row.url,row.gst,row.ternover,row.description,row.term_condition,row.status)}><i class="bi bi-pencil"></i></Button>
    },
    {
     name: "Delete",
     cell: row=>{ 
-    return (<Button onClick={() => deleteShop(row.Reg_no)} variant="danger">Delete</Button>)
+    return (<Button onClick={() => deleteShop(row.Reg_no)} variant="danger"><i class="bi bi-trash"></i></Button>)
    }
    }
   ]
+
+  useEffect(() =>{
+    displayShop();
+  }, [])
+
+  useEffect(() => {
+    let result = data.filter(value => {
+      return value.shop_name.toLowerCase().match(search.toLowerCase());
+    })
+    setFilteredShop(result);
+  }, [search]);
+  
     return (
       <>
       <div className='container'>
@@ -189,20 +217,31 @@ function submitData(Reg_no,shop_id,shop_name,address,state,city,pincode,contact,
         Shop_Registration
         </Col>
         <Col xs={6} md={2}>
-          <Button variant="success"><Link to="/shopadd">Add Shop</Link></Button>
+          <Button variant="success"><Link to="/shopadd" style={{color:"white",textDecoration:"none"}}><i class="bi bi-plus" style={{fontSize:"20px"}}></i>Add Shop</Link></Button>
         </Col>
       </Row>
         <DataTable
         columns={columns}
-        data = {data1}
+        data = {filteredshop}
         pagination
         fixedHeader
+        fixedHeaderScrollHeight="450px"
+        selectableRows
+        selectableRowsHighlight
         highlightOnHover
+        subHeader
+        subHeaderComponent={<input type="search" 
+        placeholder="search here" 
+        className="w-25 form-control" 
+        value = {search}
+        onChange = {(e) => setSearch(e.target.value)}
         />
-      </div>
+      }
+        />
+    
     <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Shop Regisration</Modal.Title>
         </Modal.Header>
         <Modal.Body>
         <Row>
@@ -291,6 +330,7 @@ function submitData(Reg_no,shop_id,shop_name,address,state,city,pincode,contact,
           </Button>
         </Modal.Footer>
       </Modal>
+      </div>
     </>
   )
 }

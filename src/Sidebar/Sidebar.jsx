@@ -22,7 +22,7 @@ function Sidebar(){
 
         <div className='side'>
         <div className="sidebar">
-        <Link to ="dashboard"><i class="bi bi-grid-3x3-gap-fill"></i>Dashboard</Link>
+        <Link to ="dashboard" style={{textDecoration:"none"}}><i class="bi bi-grid-3x3-gap-fill"></i>Dashboard</Link>
        <li>Shop</li>
        <ul>
         <li><Link to="/shopadd">Shopadd</Link></li>
