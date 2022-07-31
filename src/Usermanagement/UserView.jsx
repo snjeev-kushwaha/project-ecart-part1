@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component';
+import './user.css';
 import {Button, Modal, Row, Col} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 function UserView() {
@@ -116,21 +117,25 @@ useEffect(() => {
 
   return (
     <>
-    <div className='container'>
-    <Row style={{marginTop:"20px"}}>
-        <Col xs={12} md={10}>
+    <div style={{marginLeft:"185px"}}>
+    <Row>
+        <Col xs={10}>Users</Col>
+        <Col xs={2}><Button variant="success"><Link to="/useradd" style={{color:"white",textDecoration:"none"}}><i class="bi bi-plus"></i>Add User</Link></Button></Col>
+      </Row>
+    {/* <Row style={{marginTop:"20px"}}>
+        <Col xs={6} md={9}>
           Users
         </Col>
-        <Col xs={6} md={2}>
-        <Button variant="success"><Link to="/categoryadd" style={{color:"white",textDecoration:"none"}}><i class="bi bi-plus"></i>Add User</Link></Button>
+        <Col xs={6} md={3}>
+        <Button variant="success"><Link to="/userview" style={{color:"white",textDecoration:"none"}}><i class="bi bi-plus"></i>Add User</Link></Button>
         </Col>
-      </Row>
+      </Row> */}
    <DataTable 
    columns={columns}
    data = {filtereduser}
    pagination
    fixedHeader
-   fixedHeaderScrollHeight="450px"
+   fixedHeaderScrollHeight="380px"
    selectableRows
    selectableRowsHighlight
    highlightOnHover

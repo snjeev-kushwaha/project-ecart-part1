@@ -159,8 +159,8 @@ function Offerview() {
 
   return (
     <>
-    <div className="container">
-    <Row style={{marginTop:"20px"}}>
+    <div style={{marginLeft:"185px"}}>
+    <Row>
         <Col xs={12} md={10}>
           Offer List
         </Col>
@@ -173,7 +173,7 @@ function Offerview() {
     data={filteredoffer}
     pagination
     fixedHeader
-    fixedHeaderScrollHeight="450px"
+    fixedHeaderScrollHeight="380px"
     selectableRows
     selectableRowsHighlight
     highlightOnHover

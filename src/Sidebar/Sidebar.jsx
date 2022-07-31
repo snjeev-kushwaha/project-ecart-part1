@@ -12,17 +12,16 @@ import Offeradd from '../Offer/Offersadd';
 import Offerview from '../Offer/Offerview';
 import UserManagement from '../../src/Usermanagement/UserAdd';
 import UserView from '../../src/Usermanagement/UserView';
-import Navbar from '../Components/Navbar';
+// import Navbar from '../Components/Navbar';
 import Logout from '../Components/Logout';
 import Dashboard from '../Components/Dashboard';
 function Sidebar(){
     return(
         <>
-        <Navbar />
+        {/* <Navbar /> */}
 
         <div className='side'>
         <div className="sidebar">
-        <Link to ="dashboard" style={{textDecoration:"none"}}><i class="bi bi-grid-3x3-gap-fill"></i>Dashboard</Link>
        <li>Shop</li>
        <ul>
         <li><Link to="/shopadd">Shopadd</Link></li>

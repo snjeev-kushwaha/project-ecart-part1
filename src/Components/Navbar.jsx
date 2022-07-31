@@ -7,14 +7,15 @@ import Login from '../loginForm/Login';
 function CollapsibleExample() {
   return (
     <>
-    <Navbar bg="dark" variant="dark" className='navbar'>
+    <div className='container'>
+    <Navbar bg="dark" variant="dark" className='navbar' style={{width:"100vw"}}>
      
-        <Navbar.Brand href="#home">MICRO-COM</Navbar.Brand>
+        <Navbar.Brand href="#home" style={{marginLeft:"40%"}}>MICRO-COM</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#features"></Nav.Link>
-            <Nav.Link href="#pricing"></Nav.Link>
+            {/* <Nav.Link href="#features"></Nav.Link>
+            <Nav.Link href="#pricing"></Nav.Link> */}
           </Nav>
           <Nav>
             <Nav.Link><Link to="login">Login</Link></Nav.Link>
@@ -29,7 +30,7 @@ function CollapsibleExample() {
     <Routes>
       <Route path = "/login" element= {<Login />} />
     </Routes>
-
+    </div>
     </>
   );
 }

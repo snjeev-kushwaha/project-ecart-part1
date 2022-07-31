@@ -1,5 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import './shop.css';
+import { Country, State, City } from "country-state-city";
 import {Modal, Form, Button} from 'react-bootstrap';
 import {Row, Col} from 'react-bootstrap';
 import DataTable from 'react-data-table-component';
@@ -16,6 +17,7 @@ function Shopview() {
   let[shop_id, setShop_id] = useState('');
   let[shop_name, setShop_name] = useState('');
   let [address, setAddress] = useState('');
+  let [country, setCountry] = useState('');
   let [state, setState] = useState('');
   let [city, setCity] = useState('');
   let [pincode, setPincode] =useState('');
@@ -25,21 +27,22 @@ function Shopview() {
   let [email, setEmail] = useState('');
   let [url, setUrl] = useState('');
   let [gst, setGst] = useState('');
-  let [ternover, setTernover] = useState('');
+  let [turnover, setTurnover] = useState('');
   let [description, setDescription] = useState('');
-  let[term_condition, setTerm_condition]= useState('');
+  let[terms_condition, setTerms_condition]= useState('');
   let[status, setStatus] = useState('');
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
  const handleShow = () => setShow(true);
 
-function submitData(Reg_no,shop_id,shop_name,address,state,city,pincode,contact,owner,type,email,url,gst,ternover,description,term_condition,status){
+function submitData(Reg_no,shop_id,shop_name,address,country,state,city,pincode,contact,owner,type,email,url,gst,turnover,description,terms_condition,status){
       handleShow();
       setReg_no(Reg_no);
       setShop_id(shop_id);
       setShop_name(shop_name);
       setAddress(address);
+      setCountry(country);
       setState(state);
       setCity(city);
       setPincode(pincode);
@@ -49,9 +52,9 @@ function submitData(Reg_no,shop_id,shop_name,address,state,city,pincode,contact,
       setEmail(email);
       setUrl(url);
       setGst(gst);
-      setTernover(ternover);
+      setTurnover(turnover);
       setDescription(description);
-      setTerm_condition(term_condition);
+      setTerms_condition(terms_condition);
       setStatus(status);
     }
 
@@ -87,7 +90,7 @@ function submitData(Reg_no,shop_id,shop_name,address,state,city,pincode,contact,
   // put api
   
   function updateShop() {
-    let data1 ={Reg_no,shop_id,shop_name,address,state,city,pincode,contact,owner,type,email,url,gst,ternover,description,term_condition,status}
+    let data1 ={Reg_no,shop_id,shop_name,address,country,state,city,pincode,contact,owner,type,email,url,gst,turnover,description,terms_condition,status}
 
    let reqData = {
       method: "PUT",
@@ -135,6 +138,10 @@ function submitData(Reg_no,shop_id,shop_name,address,state,city,pincode,contact,
       selector: row=> row.address
     },
     {
+      name: "Country",
+      selector: row=> row.country
+    },
+    {
       name: "State",
       selector: row=> row.state
     },
@@ -172,7 +179,7 @@ function submitData(Reg_no,shop_id,shop_name,address,state,city,pincode,contact,
    },
    {
     name: "Ternover",
-    selector: row => row.ternover
+    selector: row => row.turnover
    },
    {
     name: "Description",
@@ -180,7 +187,7 @@ function submitData(Reg_no,shop_id,shop_name,address,state,city,pincode,contact,
    },
    {
     name: "Term_condition",
-    selector: row=> row.term_condition
+    selector: row=> row.terms_condition
    },
    {
     name: "Status",
@@ -188,7 +195,7 @@ function submitData(Reg_no,shop_id,shop_name,address,state,city,pincode,contact,
    },
    {
     name: "Edit",
-    cell: row=><Button variant="success" onClick={() => submitData(row.Reg_no,row.shop_id,row.shop_name,row.address,row.state,row.city,row.pincode,row.contact,row.owner,row.type,row.email,row.url,row.gst,row.ternover,row.description,row.term_condition,row.status)}><i class="bi bi-pencil"></i></Button>
+    cell: row=><Button variant="success" onClick={() => submitData(row.Reg_no,row.shop_id,row.shop_name,row.address,row.country,row.state,row.city,row.pincode,row.contact,row.owner,row.type,row.email,row.url,row.gst,row.turnover,row.description,row.terms_condition,row.status)}><i class="bi bi-pencil"></i></Button>
    },
    {
     name: "Delete",
@@ -211,7 +218,7 @@ function submitData(Reg_no,shop_id,shop_name,address,state,city,pincode,contact,
   
     return (
       <>
-      <div className='container'>
+      <div style={{marginLeft: "187px"}}>
       <Row style={{marginTop:"20px"}}>
         <Col xs={12} md={10}>
         Shop_Registration
@@ -225,7 +232,7 @@ function submitData(Reg_no,shop_id,shop_name,address,state,city,pincode,contact,
         data = {filteredshop}
         pagination
         fixedHeader
-        fixedHeaderScrollHeight="450px"
+        fixedHeaderScrollHeight="380px"
         selectableRows
         selectableRowsHighlight
         highlightOnHover
@@ -257,35 +264,76 @@ function submitData(Reg_no,shop_id,shop_name,address,state,city,pincode,contact,
         <Form.Control type="text" value={address} onChange={(e) =>setAddress(e.target.value)} /></Col>
       </Row>
       <Row>
-        <Col><Form.Label>State</Form.Label>
-        <select class="form-select" value={state} onChange ={(e) =>setState(e.target.value)}>
-          <option></option>
-          <option>Madhya pradesh</option>
-          <option>Uttar pradesh</option>
-          <option>Gujrat</option>
-          <option>Maharastra</option>
-        </select>
+        <Col>
+        <Form.Label>Country</Form.Label>
+            <select
+              class="form-select"
+              required
+              value={country}
+              onChange={(e) => setCountry(e.target.value)}
+            >
+              <option value="">Country</option>
+              {Country &&
+                Country.getAllCountries().map((item) => (
+                  <option key={item.isoCode} value={item.isoCode}>
+                    {item.name}
+                  </option>
+                ))}
+            </select>
         </Col>
-        <Col><Form.Label>City</Form.Label>
-        <select class="form-select" value={city} onChange ={(e) =>setCity(e.target.value)}>
-          <option></option>
-          <option>Bhopal</option>
-          <option>Indore</option>
-          <option>Mumbai</option>
-          <option>jabalpur</option>
-        </select>
-      
-        </Col>
+        <Col>
+        <Form.Label>State</Form.Label>
+            {country && (
+            <select
+              class="form-select"
+              required
+              value={state}
+              onChange={(e) => setState(e.target.value)}
+            >
+              <option value="">State</option>
+              {State && 
+              State.getStatesOfCountry(country).map((item) => (
+                <option key={item.isoCode} value={item.isoCode}>
+                  {item.name}
+                </option>
+              ))}
+            </select>
+            )}
+            </Col>
       </Row>
       <Row>
+        <Col>
+        <Form.Label>City</Form.Label>
+            {city && (
+              <select
+              class="form-select"
+              required
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+            >
+              <option value="">City</option>
+              {City &&
+              City.getCitiesOfState(country,state).map((item) => (
+                <option key={item.isoCode} value={item.isoCode}>
+                  {item.name}
+                </option>
+
+                ))}
+              
+            </select>
+            )}
+        </Col>
         <Col><Form.Label>Pincode</Form.Label>
-        <Form.Control type="text" value={pincode} onChange={(e) =>setPincode(e.target.value)} /></Col>
+        <Form.Control type="text" value={pincode} onChange={(e) =>setPincode(e.target.value)} />
+        </Col>
+      </Row>
+      <Row> 
         <Col><Form.Label>Contact</Form.Label>
         <Form.Control type="text" value={contact} onChange={(e) =>setContact(e.target.value)} /></Col>
-      </Row>
-      <Row>
         <Col><Form.Label>Show_owner</Form.Label>
         <Form.Control type="text" value={owner} onChange={(e) => setOwner(e.target.value)} /></Col>
+      </Row>
+      <Row>
         <Col><Form.Label>Shop_type</Form.Label>
         <select class="form-select" value={type} onChange={(e) => setType(e.target.value)}>
           <option></option>
@@ -295,31 +343,33 @@ function submitData(Reg_no,shop_id,shop_name,address,state,city,pincode,contact,
           <option>Footwere</option>
         </select>
         </Col>
-      </Row>
-      <Row>
         <Col><Form.Label>Email</Form.Label>
         <Form.Control type="email" value={email} onChange={(e) =>setEmail(e.target.value)} /></Col>
+      </Row>
+      <Row>
         <Col><Form.Label>URL</Form.Label>
         <Form.Control type="text" value={url} onChange={(e) =>setUrl(e.target.value)} /></Col>
-      </Row>
-      <Row>
         <Col><Form.Label>GST</Form.Label>
         <Form.Control type="text" value={gst} onChange={(e) =>setGst(e.target.value)} /></Col>
-        <Col><Form.Label>Ternover</Form.Label>
-        <Form.Control type="text" value={ternover} onChange={(e) => setTernover(e.target.value)} /></Col>
       </Row>
       <Row>
+        <Col><Form.Label>Ternover</Form.Label>
+        <Form.Control type="text" value={turnover} onChange={(e) => setTurnover(e.target.value)} /></Col>
         <Col><Form.Label>Description</Form.Label>
         <Form.Control type="text" value={description} onChange={(e) =>setDescription(e.target.value)} /></Col>
-        <Col><Form.Label>Term-condition</Form.Label>
-        <Form.Control type="text" value={term_condition} onChange={(e) =>setTerm_condition(e.target.value)} /></Col>
       </Row>
-      <Form.Label>Status</Form.Label>
-      <select class="form-select" value={status} onChange={(e) => setStatus(e.target.value)}>
+      <Row> 
+        <Col><Form.Label>Term-condition</Form.Label>
+        <Form.Control type="text" value={terms_condition} onChange={(e) =>setTerms_condition(e.target.value)} /></Col>
+        <Col>
+        <Form.Label>Status</Form.Label>
+        <select class="form-select" value={status} onChange={(e) => setStatus(e.target.value)}>
         <option></option>
           <option>Activated</option>
           <option>Pendding</option>
         </select>
+        </Col>
+      </Row>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

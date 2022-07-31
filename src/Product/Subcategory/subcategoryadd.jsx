@@ -60,7 +60,7 @@ useEffect(() =>{
 
       <Form.Label>SubCategory_Name</Form.Label>
       <Form.Control type="text" value={sub_category_name} onChange={(e) =>setSub_category_name(e.target.value)} /><br/>
-    <Button variant="primary" type="submit" onClick={addSubcategory}>
+    <Button variant="primary" onClick={addSubcategory}>
       Submit
     </Button>
   </Form>

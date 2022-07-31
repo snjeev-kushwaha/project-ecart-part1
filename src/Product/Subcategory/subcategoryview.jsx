@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Modal, Form, Row, Col } from "react-bootstrap";
 import DataTable from 'react-data-table-component';
 import Swal from 'sweetalert2';
-// import Link from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 function Subcategoryview() {
 
@@ -128,13 +128,13 @@ function Subcategoryview() {
  
   return (
     <>
-    <div className='container'>
-    <Row style={{marginTop:"20px"}}>
+    <div style={{marginLeft:"185px"}}>
+    <Row>
         <Col xs={12} md={9}>
           Sub_Category List
         </Col>
         <Col xs={6} md={3}>
-        <Button variant="success"><a href="/subcategoryadd" style={{color:"white",textDecoration:"none"}}><i class="bi bi-plus" style={{fontSize:"20px"}}></i>Addsubcategory</a></Button>
+        <Button variant="success"><Link to="/subcategoryadd" style={{color:"white",textDecoration:"none"}}><i class="bi bi-plus" style={{fontSize:"20px"}}></i>Addsubcategory</Link></Button>
         </Col>
       </Row>
     <DataTable 
@@ -142,7 +142,7 @@ function Subcategoryview() {
         data= {filteredsubcategories}
         pagination
         fixedHeader
-        fixedHeaderScrollHeight="450px"
+        fixedHeaderScrollHeight="350px"
         selectableRows
         selectableRowsHighlight
         highlightOnHover
@@ -155,7 +155,6 @@ function Subcategoryview() {
        />
       } 
     />
-    
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Udata subcategory</Modal.Title>

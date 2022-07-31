@@ -3,7 +3,7 @@ import './category.css';
 import { Modal, Form, Button, Row, Col} from "react-bootstrap";
 import DataTable from 'react-data-table-component';
 import Swal from 'sweetalert2';
-// import Link from 'react-router-dom';
+import {Link} from 'react-router-dom';
 function Categoryview() {
 
   let[data, setData] = useState([]);
@@ -34,7 +34,7 @@ async function displayCategory(){
   setFilterCategories(Udata.response);
 }
 
-  
+
 // delete api
 function deleteOffer(category_id){
     fetch(`http://localhost:5050/product_category/product_category/${category_id}`,{
@@ -96,7 +96,7 @@ function deleteOffer(category_id){
     },
     {
       name: "Edit",
-      cell: (row) =><Button variant="success" onClick={() => submitData(row.category_id,row.category_name)}><i class="bi bi-pencil"></i></Button>
+      cell: (row) =><Button variant="success" onClick={() => submitData(row.category_id,row.category_name)} style={{onmouseOver:"blue"}}><i class="bi bi-pencil"></i></Button>
     },
     {
       name:"Delete",
@@ -119,23 +119,13 @@ setFilterCategories(result);
 
   return (
     <>
-   {/* <div>
-   <Row>
-        <Col xs={12} md={9} style={{fontSize:"bold"}}>
-         Categories
-        </Col>
-        <Col xs={6} md={3}>
-        <a href="/dashboard">Dashboard</a> / categories
-        </Col>
-      </Row>
-   </div> */}
-    <div className="container">
-    <Row style={{marginTop:"20px"}}>
-        <Col xs={12} md={9}>
+    <div style={{marginLeft:"185px"}}>
+    <Row>
+        <Col xs={12} md={10}>
           Category List
         </Col>
-        <Col xs={6} md={3}>
-        <Button variant="success" style={{width:"180px",height:"40px"}}><a href="/categoryadd" style={{color:"white",textDecoration:"none"}}><i class="bi bi-plus" style={{fontSize:"20px"}}></i>Addcategory</a></Button>
+        <Col xs={6} md={2}>
+        <Button variant="success" style={{width:"180px",height:"40px"}}><Link to="/categoryadd" style={{color:"white",textDecoration:"none"}}><i class="bi bi-plus" style={{fontSize:"20px"}}></i>Addcategory</Link></Button>
         </Col>
       </Row>
       <DataTable
@@ -143,7 +133,7 @@ setFilterCategories(result);
       data = {filteredcategories}
       pagination
       fixedHeader
-      fixedHeaderScrollHeight="450px"
+      fixedHeaderScrollHeight="350px"
       selectableRows
       selectableRowsHighlight
       highlightOnHover
@@ -156,8 +146,7 @@ setFilterCategories(result);
       onChange={(e) =>setSearch(e.target.value)}
       />
       }
-      />
-   
+    />
     <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Update category</Modal.Title>
