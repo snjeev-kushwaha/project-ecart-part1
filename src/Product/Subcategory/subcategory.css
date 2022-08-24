@@ -1,13 +1,5 @@
 .subcategory Form{
-        width: 50%;
-        margin-left: 350px;
-        color: rgb(15, 14, 14);
-        font-weight: bold;       
+        padding: 50px;
+        font: bold;      
 }
-.subcategory button{
-        margin-left: 250px;
-    margin-top: 10px;
-    width: 20%;
-    height: 8vh;
-    font-weight: bold;
-}
+

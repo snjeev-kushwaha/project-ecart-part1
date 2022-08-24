@@ -87,6 +87,7 @@ function Subcategoryview() {
       })
     })
     getData();
+    handleClose();
   }
 
   const columns =[
@@ -109,7 +110,7 @@ function Subcategoryview() {
     },
     {
       name:'Delete',
-      cell : row=>{return (<Button variant="danger" onClick={() => deleteSubcategory(row.category_id)}><i class="bi bi-trash"></i>
+      cell : row=>{return (<Button variant="danger" onClick={() => deleteSubcategory(row.sub_category_id)}><i class="bi bi-trash"></i>
      </Button>)}
     }
   ]
@@ -128,7 +129,7 @@ function Subcategoryview() {
  
   return (
     <>
-    <div style={{marginLeft:"185px"}}>
+    <div>
     <Row>
         <Col xs={12} md={9}>
           Sub_Category List

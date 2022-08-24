@@ -30,13 +30,14 @@ function Shopview() {
   let [turnover, setTurnover] = useState('');
   let [description, setDescription] = useState('');
   let[terms_condition, setTerms_condition]= useState('');
+  let [image, setImage] = useState('');
   let[status, setStatus] = useState('');
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
  const handleShow = () => setShow(true);
 
-function submitData(Reg_no,shop_id,shop_name,address,country,state,city,pincode,contact,owner,type,email,url,gst,turnover,description,terms_condition,status){
+function submitData(Reg_no,shop_id,shop_name,address,country,state,city,pincode,contact,owner,type,email,url,gst,turnover,description,terms_condition,status,image){
       handleShow();
       setReg_no(Reg_no);
       setShop_id(shop_id);
@@ -56,6 +57,7 @@ function submitData(Reg_no,shop_id,shop_name,address,country,state,city,pincode,
       setDescription(description);
       setTerms_condition(terms_condition);
       setStatus(status);
+      setImage(image);
     }
 
   // get api
@@ -90,7 +92,7 @@ function submitData(Reg_no,shop_id,shop_name,address,country,state,city,pincode,
   // put api
   
   function updateShop() {
-    let data1 ={Reg_no,shop_id,shop_name,address,country,state,city,pincode,contact,owner,type,email,url,gst,turnover,description,terms_condition,status}
+    let data1 ={Reg_no,shop_id,shop_name,address,country,state,city,pincode,contact,owner,type,email,url,gst,turnover,description,terms_condition,status,image}
 
    let reqData = {
       method: "PUT",
@@ -115,6 +117,7 @@ function submitData(Reg_no,shop_id,shop_name,address,country,state,city,pincode,
       })
     })
     displayShop();
+    handleClose();
   }
 
   const columns = [
@@ -194,8 +197,12 @@ function submitData(Reg_no,shop_id,shop_name,address,country,state,city,pincode,
     selector: row => row.status
    },
    {
+    name: "Photo",
+    selector: row => row.image
+   },
+   {
     name: "Edit",
-    cell: row=><Button variant="success" onClick={() => submitData(row.Reg_no,row.shop_id,row.shop_name,row.address,row.country,row.state,row.city,row.pincode,row.contact,row.owner,row.type,row.email,row.url,row.gst,row.turnover,row.description,row.terms_condition,row.status)}><i class="bi bi-pencil"></i></Button>
+    cell: row=><Button variant="success" onClick={() => submitData(row.Reg_no,row.shop_id,row.shop_name,row.address,row.country,row.state,row.city,row.pincode,row.contact,row.owner,row.type,row.email,row.url,row.gst,row.turnover,row.description,row.terms_condition,row.status,row.image)}><i class="bi bi-pencil"></i></Button>
    },
    {
     name: "Delete",
@@ -218,8 +225,8 @@ function submitData(Reg_no,shop_id,shop_name,address,country,state,city,pincode,
   
     return (
       <>
-      <div style={{marginLeft: "187px"}}>
-      <Row style={{marginTop:"20px"}}>
+      <div>
+      <Row>
         <Col xs={12} md={10}>
         Shop_Registration
         </Col>
@@ -232,7 +239,7 @@ function submitData(Reg_no,shop_id,shop_name,address,country,state,city,pincode,
         data = {filteredshop}
         pagination
         fixedHeader
-        fixedHeaderScrollHeight="380px"
+        fixedHeaderScrollHeight="350px"
         selectableRows
         selectableRowsHighlight
         highlightOnHover
@@ -366,10 +373,16 @@ function submitData(Reg_no,shop_id,shop_name,address,country,state,city,pincode,
         <select class="form-select" value={status} onChange={(e) => setStatus(e.target.value)}>
         <option></option>
           <option>Activated</option>
-          <option>Pendding</option>
+          <option>Pending</option>
         </select>
         </Col>
       </Row>
+      <Form.Label>Photo</Form.Label>
+            <Form.Control
+              type="text"
+              value={image}
+              onChange={(e) => setImage(e.target.value)}
+            />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

@@ -23,6 +23,7 @@ function Shopadd() {
   let [description, setDescription] = useState("");
   let [terms_condition, setTerms_condition] = useState("");
   let [status, setStatus] = useState("");
+  let [image, setImage] = useState('');
 
   // post api
 
@@ -46,6 +47,7 @@ function Shopadd() {
       description: description,
       terms_condition: terms_condition,
       status: status,
+      image: image
     };
 
     let reqData = {
@@ -265,10 +267,16 @@ function Shopadd() {
             >
               <option></option>
               <option>Activated</option>
-              <option>pendding</option>
+              <option>pending</option>
             </select>
           </Col>
         </Row>
+        <Form.Label>Photo</Form.Label>
+            <Form.Control
+              type="text"
+              value={image}
+              onChange={(e) => setImage(e.target.value)}
+            />
         <Button variant="primary" type="submit" onClick={addShop}>
           Submit
         </Button>

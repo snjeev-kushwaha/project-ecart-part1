@@ -31,12 +31,12 @@ const Sidebar1 = ({ children }) => {
       icon: <FaUserAlt />,
     },
     {
-      path: "/userview",
+      path: "/usertab",
       name: "User",
       icon: <FaUserFriends />,
     },
     {
-      path: "/shopview",
+      path: "/shoptab",
       name: "Shop",
       icon: <FaShoppingBag />,
     },
@@ -45,17 +45,17 @@ const Sidebar1 = ({ children }) => {
     //     icon:<FaProductHunt/>
     // },
     {
-      path: "/categoryview",
+      path: "/categorytab",
       name: "Pcategory",
       icon: <FaThLarge />,
     },
     {
-      path: "/subcategoryview",
+      path: "/subcategorytab",
       name: "Psubcategory",
       icon: <FaThList />,
     },
     {
-      path: "/offerview",
+      path: "/offertab",
       name: "Offers",
       icon: <FaFire />,
     },
@@ -98,7 +98,7 @@ const Sidebar1 = ({ children }) => {
             </NavLink>
           ))}
         </div>
-        <main>{children}</main>
+        <main className="mainbox">{children}</main>
       </div>
     </>
   );

@@ -18,8 +18,6 @@ import Dashboard from '../Components/Dashboard';
 function Sidebar(){
     return(
         <>
-        {/* <Navbar /> */}
-
         <div className='side'>
         <div className="sidebar">
        <li>Shop</li>

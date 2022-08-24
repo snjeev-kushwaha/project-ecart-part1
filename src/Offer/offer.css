@@ -1,14 +1,4 @@
 .addoffer Form{
-    width: 60%;
-    margin-left: 350px;
-    font-weight: bold;
-border-radius: 10px;
-}
-.addoffer button{
-    margin-left: 250px;
-    /* margin-top: 10px; */
-    width: 20%;
-    height: 8vh;
-    font-weight: bold;
-    font-size: medium;
+    padding: 50px;
+    font: bold;
 }

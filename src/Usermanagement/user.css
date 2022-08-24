@@ -1,13 +1,6 @@
-.user Form{
-    margin-left: 300px;
-    width: 60%;
-    font-weight: bold;
+.user{
+    padding: 50px;
+    font: bold;
 }
-.user Form button {
-    margin-left: 250px;
-    margin-top: 20px;
-    width: 20%;
-    height: 8vh;
-    font-weight: bold;
-}
+
 

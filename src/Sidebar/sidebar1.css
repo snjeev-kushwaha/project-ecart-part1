@@ -7,21 +7,25 @@
   .contains{
      display: flex;
   }
-  main{
-    width: 100%;
-    padding: 70px;
-    padding: 7rem 8rem 0rem 10rem;
-    text-align: justify;
-    /* font-size: 14px; */
+
+  .mainbox{
+    width: 100vw;
+    padding: 2rem 3rem 0rem 3rem;
+    /* text-align: justify; */
+    height: 90vh;
+    overflow-y: hidden;
+    overflow-x: hidden;
   }
+
   .sidebar{
     background: #000;
     color: #fff;
     height: 100vh;
+    margin-top: -60px;
     width: 200px;
     transition: all 0.5s;
-    margin-right: px;
-    position: fixed;
+    margin-right: 0px;
+    /* position: fixed; */
     z-index: 2;
   }
   .top_section{
@@ -29,11 +33,11 @@
     align-items:center;
     /* justify-content: space-evenly; */
     padding:20px 15px;
-    width: 0%;
   }
   .logo{
     font-size: 20px;
     margin-left: 0px;
+    color: white;
   }
   
   .bars{

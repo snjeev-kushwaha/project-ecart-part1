@@ -65,6 +65,7 @@ function selectData(status){
        })
     })
     fetchData();
+    handleClose();
  }
 
  const columns =[
@@ -113,14 +114,13 @@ useEffect(() => {
     return value.fullname.toLowerCase().match(search.toLowerCase());
   })
   setFilteredUser(result);
-}, [search]);
-
+},[search]);
   return (
     <>
-    <div style={{marginLeft:"185px"}}>
+    <div>
     <Row>
-        <Col xs={10}>Users</Col>
-        <Col xs={2}><Button variant="success"><Link to="/useradd" style={{color:"white",textDecoration:"none"}}><i class="bi bi-plus"></i>Add User</Link></Button></Col>
+        <Col xs={12} md={10}>Users</Col>
+        <Col xs={6} md={2}><Button variant="success"><Link to="/useradd" style={{color:"white",textDecoration:"none"}}><i class="bi bi-plus"></i>Add User</Link></Button></Col>
       </Row>
     {/* <Row style={{marginTop:"20px"}}>
         <Col xs={6} md={9}>
@@ -135,7 +135,7 @@ useEffect(() => {
    data = {filtereduser}
    pagination
    fixedHeader
-   fixedHeaderScrollHeight="380px"
+   fixedHeaderScrollHeight="350px"
    selectableRows
    selectableRowsHighlight
    highlightOnHover

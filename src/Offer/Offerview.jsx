@@ -99,6 +99,7 @@ function Offerview() {
       })
     })
     displayOffer();
+    handleClose();
   }
 
   const columns =[
@@ -159,7 +160,7 @@ function Offerview() {
 
   return (
     <>
-    <div style={{marginLeft:"185px"}}>
+    <div>
     <Row>
         <Col xs={12} md={10}>
           Offer List
@@ -173,7 +174,7 @@ function Offerview() {
     data={filteredoffer}
     pagination
     fixedHeader
-    fixedHeaderScrollHeight="380px"
+    fixedHeaderScrollHeight="350px"
     selectableRows
     selectableRowsHighlight
     highlightOnHover

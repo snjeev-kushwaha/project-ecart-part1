@@ -4,7 +4,7 @@ function UserManagement(){
     return(
         <>
         <div className='user'>
-          <h1>User Management From</h1>
+          <h4>User Management From</h4>
         <Form>
         <Form.Label>User_Id</Form.Label>
         <Form.Control type="text" />

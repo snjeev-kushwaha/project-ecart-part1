@@ -1,12 +1,5 @@
 .shopadd{
-    width: 50%;
-    margin-left: 300px;
-    color: black;
+    padding: 50px;
+    font: bold;
 }
-.shopadd button{
-    margin-left: 220px;
-    margin-top: 10px;
-    width: 25%;
-    height: 7vh;
-    font-weight: bold;
-}
+

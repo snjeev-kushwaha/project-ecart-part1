@@ -82,6 +82,7 @@ function deleteOffer(category_id){
       })
     })
     displayCategory();
+    handleClose();
   }
   
   const columns =[
@@ -119,13 +120,13 @@ setFilterCategories(result);
 
   return (
     <>
-    <div style={{marginLeft:"185px"}}>
+    <div>
     <Row>
         <Col xs={12} md={10}>
           Category List
         </Col>
         <Col xs={6} md={2}>
-        <Button variant="success" style={{width:"180px",height:"40px"}}><Link to="/categoryadd" style={{color:"white",textDecoration:"none"}}><i class="bi bi-plus" style={{fontSize:"20px"}}></i>Addcategory</Link></Button>
+        <Button variant="success"><Link to="/categoryadd" style={{color:"white",textDecoration:"none"}}><i class="bi bi-plus" style={{fontSize:"20px"}}></i>Addcategory</Link></Button>
         </Col>
       </Row>
       <DataTable
