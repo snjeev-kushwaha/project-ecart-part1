@@ -49,7 +49,7 @@ useEffect(() =>{
       {
         data.map((item,index) =>{
           return (
-            <option key={index} vlaue={item.category_id}>{item.category_name}</option>
+            <option key={index} vlaue={item.category_id}>{item.category_id}</option>
           )
         })
       }

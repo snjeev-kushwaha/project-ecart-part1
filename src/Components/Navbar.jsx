@@ -2,6 +2,7 @@ import './Navbar.css';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import {Link} from 'react-router-dom';
+import Login from '../loginForm/Login';
 
 function CollapsibleExample() {
   return (
@@ -9,7 +10,7 @@ function CollapsibleExample() {
     <div className='nav'>
     <Navbar bg="dark" variant="dark" className='navbar' >
      
-        <Navbar.Brand href="#home">MICRO-COMM</Navbar.Brand>
+        {/* <Navbar.Brand href="#home">MICRO-COMM</Navbar.Brand> */}
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
@@ -17,7 +18,7 @@ function CollapsibleExample() {
             <Nav.Link href="#pricing"></Nav.Link> */}
           </Nav>
           <Nav>
-            <Nav.Link><Link to="/login">Login</Link></Nav.Link>
+            <Nav.Link><Link to="/login"><Login /></Link></Nav.Link>
             <Nav.Link eventKey={2} href="#memes">
               Sign Up
             </Nav.Link>

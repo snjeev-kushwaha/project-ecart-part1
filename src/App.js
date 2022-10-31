@@ -13,7 +13,6 @@ import Productcategorytab from "../src/Tabs/Productcategorytab";
 import Subcategorytab from "../src/Tabs/Subcategorytab";
 import ShopTab from "../src/Tabs/Shoptab";
 import Usertab from "./Tabs/Usertab";
-import Login from "./loginForm/Login";
 function App() {
   return (
     <div>
@@ -25,7 +24,6 @@ function App() {
           <Route path="/subcategoryadd" element={<Subcategoryadd />} />
           <Route path="/offeradd" element={<Offeradd />} />
           <Route path="/useradd" element={<UserManagement />} />
-          <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/offertab" element={<Offertab />} />
           <Route path="/categorytab" element={<Productcategorytab />} />

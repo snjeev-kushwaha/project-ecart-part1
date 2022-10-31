@@ -10,11 +10,11 @@ function Login() {
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
+        Login
       </Button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title></Modal.Title>
+          <Modal.Title>Login Form</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div class="card mb-3" style={{ maxWidth: "540px" }}>
@@ -79,7 +79,7 @@ function Login() {
                     </Form>
                   </h5>
                   <p class="card-text pt-3">
-                   <Link style={{textDecoration:"none",color:"gray"}} to="/">New to Flipcart? create an account</Link>
+                   <Link style={{textDecoration:"none",color:"gray"}} to="/">New to E-cart? create an account</Link>
                   </p>
                 </div>
               </div>
