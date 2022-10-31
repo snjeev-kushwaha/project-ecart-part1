@@ -25,7 +25,6 @@ function Categoryview() {
 
   //  get api
 
-
 async function displayCategory(){
   let res = await fetch("http://localhost:5050/product_category/product_category");
   let Udata = await res.json();
@@ -122,10 +121,10 @@ setFilterCategories(result);
     <>
     <div>
     <Row>
-        <Col xs={12} md={10}>
+        <Col xs={12} md={9}>
           Category List
         </Col>
-        <Col xs={6} md={2}>
+        <Col xs={6} md={3}>
         <Button variant="success"><Link to="/categoryadd" style={{color:"white",textDecoration:"none"}}><i class="bi bi-plus" style={{fontSize:"20px"}}></i>Addcategory</Link></Button>
         </Col>
       </Row>
