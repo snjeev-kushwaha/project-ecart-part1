@@ -1,16 +1,11 @@
 import React, { useState } from "react";
-import { Modal } from "react-bootstrap";
 import { Link } from 'react-router-dom';
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Form, Input } from "antd";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 
-function Login() {
+function Login1() {
   const navigate = useNavigate()
-
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   const [fullname, setFullname] = useState({
     email: "",
@@ -34,19 +29,10 @@ function Login() {
       localStorage.setItem('token', response.data.token)
       navigate('/')
     }
-    handleClose()
   }
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
-        Login
-      </Button>
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Login Form</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
           <div class="card mb-3" style={{ maxWidth: "540px" }}>
             <div class="row g-0">
               <div class="col-md-4 p-2" style={{ backgroundColor: "#2874f0" }}>
@@ -87,38 +73,23 @@ function Login() {
                       >
                         <Input.Password name="password" value={fullname.password} onChange={handleChange} />
                       </Form.Item>
-
-                      <Form.Item
-                        name="remember"
-                        valuePropName="checked"
-                        wrapperCol={{
-                          offset: 8,
-                          span: 16,
-                        }}
-                      >
-                      </Form.Item>
-
-
                       <Button type="primary" block onClick={submitData}>
                         Login
                       </Button>
                       <center><h6>OR</h6></center>
-                      <Button block Link='/register'>Sign Up</Button>
+                      <Button block>Sign Up</Button>
 
                     </Form>
                   </h5>
                   <p class="card-text pt-3">
-                    <Link style={{ textDecoration: "none", color: "gray" }} to="/">New to E-cart? create an account</Link>
+                    <Link style={{ textDecoration: "none", color: "gray" }} to="/register">New to E-cart? create an account</Link>
                   </p>
                 </div>
               </div>
             </div>
           </div>
-        </Modal.Body>
-        <Modal.Footer></Modal.Footer>
-      </Modal>
     </>
   );
 }
 
-export default Login;
+export default Login1;
